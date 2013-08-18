@@ -38,14 +38,21 @@ class SenRace(object):
             self.votes_cand.append(0)
             self.elected.append(0)
             self.eliminated.append(0)
-            self.most_recent_packet.append(0)
+            self.most_recent_packet.append([-1])
             temp = temp + 1
         for vote in vote_array:
             self.votes_cand[vote.current_cand_loc] = self.votes_cand[vote.current_cand_loc] + vote.total
         self.quota = int(math.floor(self.votes / (cands + 1)) + 1)
         self.state = 'static'
-        #for vote in vote_array:
-        #    self.most_recent_packet
+        # Now check each vote packet to populate the most_recent_packet array
+        temp = 0
+        for vote in vote_array:
+            if self.most_recent_packet[vote.current_cand_loc] == [-1]:
+                self.most_recent_packet[vote.current_cand_loc] = [temp]
+            else:
+                self.most_recent_packet[vote.current_cand_loc].append(temp)
+            temp = temp + 1
+        self.distribute_overflow_stack = []
     def eliminate_candidate(self, cand_no):
         self.eliminated[cand_no-1] = 1
     def elect_candidate(self, cand_no):
@@ -73,7 +80,17 @@ class SenRace(object):
             # elif
             # Now that the default win conditions have been checked, check to see if there's
             # an overquota to be distributed for the next level
-            #elif 
+            elif max(self.votes_cand) >= self.quota:
+                # Find the member to distribute
+                self.distribute_overflow_stack.append(self.votes_cand.index(max(self.votes_cand)))
+                # Elect the people that have broken quota
+                temp = 0
+                while temp < self.candidates:
+                    if self.votes_cand[temp] > self.quota:
+                        self.elected[temp] = 1
+                    temp = temp + 1
+                # Change the state to distribution of overflow stage
+                self.state = 'distover'
             
             
 
@@ -92,7 +109,7 @@ gpptv = 'NSW_Groups_Parties_Votes.csv'
 
 # Let us create a temporary voting structure for the senate        
 voting_structure = []
-voting_structure.append(SenVote([3,1,2,4],400))
+voting_structure.append(SenVote([3,2,1,4],400))
 voting_structure.append(SenVote([4,2,1,3],370))
 voting_structure.append(SenVote([1,2,3,4],230))
 voting_structure.append(SenVote([3,2,4,1],100))
@@ -105,6 +122,7 @@ total_race.check_state()
 print voting_structure[1].total
 print voting_structure[1].pref_list
 print voting_structure[1].current_cand
+print total_race.most_recent_packet
 print total_race.votes
 print total_race.candidates
 print total_race.votes_cand
