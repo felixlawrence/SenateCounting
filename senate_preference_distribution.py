@@ -47,12 +47,15 @@ class SenRace(object):
         # Now check each vote packet to populate the most_recent_packet array
         temp = 0
         for vote in vote_array:
+            # Check if anyone's voted for the sucker yet!
             if self.most_recent_packet[vote.current_cand_loc] == [-1]:
                 self.most_recent_packet[vote.current_cand_loc] = [temp]
+            # If they have, then make sure you append the other packet, since they have equal priority
             else:
                 self.most_recent_packet[vote.current_cand_loc].append(temp)
             temp = temp + 1
         self.distribute_overflow_stack = []
+        self.distribute_excluded_stack = []
     def eliminate_candidate(self, cand_no):
         self.eliminated[cand_no-1] = 1
     def elect_candidate(self, cand_no):
@@ -82,6 +85,7 @@ class SenRace(object):
             # an overquota to be distributed for the next level
             elif max(self.votes_cand) >= self.quota:
                 # Find the member to distribute
+                # TO DO: RANDOM CHOICE OF EQUAL TOP CANDIDATES
                 self.distribute_overflow_stack.append(self.votes_cand.index(max(self.votes_cand)))
                 # Elect the people that have broken quota
                 temp = 0
@@ -91,6 +95,14 @@ class SenRace(object):
                     temp = temp + 1
                 # Change the state to distribution of overflow stage
                 self.state = 'distover'
+                # TO DO: NEED TO ADD VECTOR FOR VOTE PACKETS THAT NEED TO BE DISTRIBUTED
+                # IN THE ORDER IN WHICH THEY BREAK QUOTA
+            # else we've got to drop from the bottom; so take the smallest person
+            else:
+                self.state = 'dropbott'
+                # TO DO: RANDOM CHOICE OF EQUAL BOTTOM CANDIDATES
+                self.distribute_excluded_stack.append(self.votes_cand.index(min(self.votes_cand)))
+                self.eliminated[self.votes_cand.index(min(self.votes_cand))] = 1
             
             
 
