@@ -217,14 +217,14 @@ gpptv = 'NSW_Groups_Parties_Votes.csv'
 
 # Let us create a temporary voting structure for the senate        
 voting_structure = []
-voting_structure.append(SenVote([3,1,2,4],202))
-voting_structure.append(SenVote([4,2,1,3],201))
-voting_structure.append(SenVote([1,2,3,4],200))
-voting_structure.append(SenVote([3,2,4,1],51))
-voting_structure.append(SenVote([3,4,2,1],50))
+voting_structure.append(SenVote([3,1,2,4,5],202))
+voting_structure.append(SenVote([4,2,1,3,5],201))
+voting_structure.append(SenVote([1,2,3,4,5],200))
+voting_structure.append(SenVote([3,2,4,1,5],50))
+voting_structure.append(SenVote([3,4,2,5,1],50))
 
 # Candidates to be elected
-cand_elec = 2
+cand_elec = 1
 total_race = SenRace(voting_structure,cand_elec)
 total_race.check_state()
 
@@ -242,6 +242,21 @@ print total_race.state
 total_race.check_state()
 
 print total_race.state
+
+print voting_structure[1].total
+print voting_structure[1].pref_list
+print voting_structure[1].current_cand
+print total_race.most_recent_packet
+print total_race.votes
+print total_race.candidates
+print total_race.votes_cand
+print total_race.quota
+print total_race.elected
+print total_race.state
+
+total_race.check_state()
+
+total_race.check_state()
 
 print voting_structure[1].total
 print voting_structure[1].pref_list
