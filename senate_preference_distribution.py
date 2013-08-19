@@ -234,6 +234,8 @@ class SenRace(object):
                 # The list of number of votes in each packet that needs to be distributed.
                 transferring_votes = []
                 while temp < len(vote_packets_to_distribute):
+                    #print vote_packets_to_distribute
+                    #print self.vote_array
                     transferring_votes.append(self.vote_array[vote_packets_to_distribute[temp]].total)
                     temp = temp + 1
                 
@@ -266,8 +268,7 @@ class SenRace(object):
                     new_vote.set_candidate_index(self.vote_array[vote_index].current_cand_loc)
                     new_vote.next_valid_candidate(self.elected,self.eliminated)
                     # Work out the new vote index
-                    #new_vote_index = len(self.vote_array) + 1
-                    new_vote_index = len(self.vote_array)
+                    new_vote_index = len(self.vote_array)# + 1
                     # Define this new vote packet as a new overflow packet for the next distribution:
                     if most_recent_packet[new_vote.current_cand_loc] == [-1]:
                         most_recent_packet[new_vote.current_cand_loc] = [new_vote_index]
@@ -425,12 +426,14 @@ test_vote.set_candidate_index(3)
 print "New Candidadte: " + str(test_vote.current_cand)
 
 print "================BEGIN REAL TEST=============="
+print "================This is a tight=============="
+print "====================race...=================="
 voting_structure2 = []
 voting_structure2.append(SenVote([3,1,2,4,5],202))
 voting_structure2.append(SenVote([4,2,1,3,5],201))
 voting_structure2.append(SenVote([1,2,3,4,5],200))
-voting_structure2.append(SenVote([3,2,4,1,5],100))
-voting_structure2.append(SenVote([3,4,2,5,1],101))
+voting_structure2.append(SenVote([3,2,4,1,5],101))
+voting_structure2.append(SenVote([3,4,2,5,1],10))
 cand_elec2 = 2
 total_race2 = SenRace(voting_structure2,cand_elec2)
 print 'THE QUOTA IS: ' + str(total_race2.quota)
