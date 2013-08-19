@@ -159,10 +159,30 @@ class SenRace(object):
             # Drop the candidate from the bottom, and then assign to the static state.
             self.state = 'static'
             self.round = self.round + 1
-            ## TO DO: FIND MULTIPLE MINIMA AND PICK A RANDOM ONE
-            cand_to_drop = self.votes_cand.index(min(self.votes_cand))
-            # For each vote packet on this candidate, redistribute to a new candidate who is both not elected
-            # and not eliminated.
+            # While there is someone to distribute
+            while self.distribute_excluded_stack != []:
+                # Distribute them!
+                cand_to_distribute = self.distribute_excluded_stack[0]
+                temp = 0
+                while temp < len(self.vote_array):
+                    vote = self.vote_array[temp]
+                    # Check each vote to see if it's on the distributed candidate.
+                    if vote.current_cand_loc == cand_to_distribute:
+                        # Progress the vote in the array
+                        vote.next_valid_candidate(self.elected,self.eliminated)
+                        self.vote_array[temp] = vote
+                    temp = temp + 1
+                # Then pop them off the stack
+                self.distribute_excluded_stack = self.distribute_excluded_stack[1:]
+            
+            # Perform a vote recount now that the votes have been moved.
+            temp = 0
+            self.votes_cand = []
+            while temp < self.candidates:
+                self.votes_cand.append(0)
+                temp = temp + 1
+            for vote in self.vote_array:
+                self.votes_cand[vote.current_cand_loc] = self.votes_cand[vote.current_cand_loc] + vote.total
             
 a = [0,0,1,3]
 b = [i for i, e in enumerate(a) if e != 0]
@@ -173,10 +193,11 @@ for i in b:
     
 stack = []
 stack.append(1)
-#stack.append(2)
-#stack.append(3)
-stack = stack[1:]
-print "Stack: " + str(stack)
+stack.append(2)
+stack.append(3)
+while stack != []:
+    stack = stack[1:]
+    print "Stack: " + str(stack)
            
             
             
@@ -196,9 +217,9 @@ gpptv = 'NSW_Groups_Parties_Votes.csv'
 
 # Let us create a temporary voting structure for the senate        
 voting_structure = []
-voting_structure.append(SenVote([3,2,1,4],400))
-voting_structure.append(SenVote([4,2,1,3],370))
-voting_structure.append(SenVote([1,2,3,4],230))
+voting_structure.append(SenVote([3,1,2,4],202))
+voting_structure.append(SenVote([4,2,1,3],201))
+voting_structure.append(SenVote([1,2,3,4],200))
 voting_structure.append(SenVote([3,2,4,1],100))
 
 # Candidates to be elected
@@ -215,6 +236,22 @@ print total_race.candidates
 print total_race.votes_cand
 print total_race.quota
 print total_race.elected
+print total_race.state
+
+total_race.check_state()
+
+print total_race.state
+
+print voting_structure[1].total
+print voting_structure[1].pref_list
+print voting_structure[1].current_cand
+print total_race.most_recent_packet
+print total_race.votes
+print total_race.candidates
+print total_race.votes_cand
+print total_race.quota
+print total_race.elected
+print total_race.state
 
 #a = [0,0,1,3]
 #anp = np.array(a)
