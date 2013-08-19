@@ -266,7 +266,8 @@ class SenRace(object):
                     new_vote.set_candidate_index(self.vote_array[vote_index].current_cand_loc)
                     new_vote.next_valid_candidate(self.elected,self.eliminated)
                     # Work out the new vote index
-                    new_vote_index = len(self.vote_array) + 1
+                    #new_vote_index = len(self.vote_array) + 1
+                    new_vote_index = len(self.vote_array)
                     # Define this new vote packet as a new overflow packet for the next distribution:
                     if most_recent_packet[new_vote.current_cand_loc] == [-1]:
                         most_recent_packet[new_vote.current_cand_loc] = [new_vote_index]
