@@ -220,7 +220,8 @@ voting_structure = []
 voting_structure.append(SenVote([3,1,2,4],202))
 voting_structure.append(SenVote([4,2,1,3],201))
 voting_structure.append(SenVote([1,2,3,4],200))
-voting_structure.append(SenVote([3,2,4,1],100))
+voting_structure.append(SenVote([3,2,4,1],51))
+voting_structure.append(SenVote([3,4,2,1],50))
 
 # Candidates to be elected
 cand_elec = 2
