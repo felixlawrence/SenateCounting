@@ -54,9 +54,10 @@ class SenVote(object):
 # TODO: Work out order of senate elect
         
 class SenRace(object):
-    def __init__(self, vote_array, cands):
+    def __init__(self, vote_array, cands, decpla):
         # Defined by the vote in the vote array
         self.round = 1
+        self.dp = max(0,math.floor(decpla))
         self.candidates = len(vote_array[0].pref_list)
         self.cand_to_elect = cands
         self.votes = 0
@@ -241,7 +242,7 @@ class SenRace(object):
                 
                 # Transfer Value to 6 Decimal Places (can change)
                 print "Overflow: " + str(overflow) + ", " + str(transferring_votes)
-                transfer_value = float(math.floor(float(float(overflow) / float(sum(transferring_votes))) * pow(10,6)) / pow(10,6))
+                transfer_value = float(math.floor(float(float(overflow) / float(sum(transferring_votes))) * pow(10,self.dp)) / pow(10,self.dp))
                 print 'In round ' + str(self.round) + ' we have overflow and a transfer value of ' + '%.8f' % transfer_value
                 print "TRANSFERRING VOTES: " + str(sum(transferring_votes))
                 
@@ -307,38 +308,6 @@ class SenRace(object):
                 
                 self.distribute_overflow_stack = self.distribute_overflow_stack[1:]
                 
-            
-a = [0,0,1,3]
-b = [i for i, e in enumerate(a) if e != 0]
-c = min(b)
-print a[c]
-for i in b:
-    print a[i]
-
-a = [1,1,0.34,18]
-print sum(a)
-print math.fsum(a)
-    
-stack = []
-stack.append(1)
-stack.append(2)
-stack.append(3)
-while stack != []:
-    stack = stack[1:]
-    print "Stack: " + str(stack)
-           
-stack = []
-stack.append([1])
-stack.append([2])
-stack.append([3])
-print stack[0]
-print stack[1][0]
-while stack != []:
-    stack = stack[1:]
-    print "Stack: " + str(stack)            
-
-
-
 ## Source files.
 # Preference flows for above the line votes sorted by party letter.
 # Each row is of the form:
@@ -349,99 +318,26 @@ cands = 'NSW_Senate_Candidates.csv'
 # A list of the letter Groups along with the
 gpptv = 'NSW_Groups_Parties_Votes.csv'
 
-
-
-# Let us create a temporary voting structure for the senate        
+print "============================================="
+print "================BEGIN REAL TEST=============="
+print "================This is a tight=============="
+print "====================race...=================="
+print "============================================="
 voting_structure = []
 voting_structure.append(SenVote([3,1,2,4,5],202))
 voting_structure.append(SenVote([4,2,1,3,5],201))
 voting_structure.append(SenVote([1,2,3,4,5],200))
-voting_structure.append(SenVote([3,2,4,1,5],52))
-voting_structure.append(SenVote([3,4,2,5,1],51))
-
-# Candidates to be elected
+voting_structure.append(SenVote([3,2,4,1,5],97))
+voting_structure.append(SenVote([3,4,2,5,1],10))
+voting_structure.append(SenVote([5,4,3,2,1],3))
 cand_elec = 2
-total_race = SenRace(voting_structure,cand_elec)
-total_race.check_state()
-
-print 'BAR 1'
-
-print voting_structure[1].total
-print voting_structure[1].pref_list
-print voting_structure[1].current_cand
-print "Most recent packet: " + str(total_race.most_recent_packet)
-print total_race.votes
-print total_race.candidates
-print total_race.votes_cand
-print total_race.quota
-print total_race.elected
-print total_race.state
-print 'BAR 2'
-total_race.check_state()
-print 'BAR 3'
-print total_race.state
-print 'BAR 4'
-print voting_structure[1].total
-print voting_structure[1].pref_list
-print voting_structure[1].current_cand
-print total_race.most_recent_packet
-print total_race.votes
-print total_race.candidates
-print total_race.votes_cand
-print total_race.quota
-print total_race.elected
-print total_race.state
-print 'BAR 5'
-total_race.check_state()
-
-total_race.check_state()
-
-print voting_structure[1].total
-print voting_structure[1].pref_list
-print voting_structure[1].current_cand
-print total_race.most_recent_packet
-print total_race.votes
-print total_race.candidates
-print total_race.votes_cand
-print total_race.quota
-print total_race.elected
-print total_race.state
-
-total_race.check_state()
-
-print total_race.state
-
-#a = [0,0,1,3]
-#anp = np.array(a)
-#val = np.min(anp[np.nonzero(anp)])
-#print str(val)
-#print a.index(val)
-
-test_vote = SenVote([3,2,1,4],400)
-test_vote.next_valid_candidate([0,0,0,0],[0,0,0,0])
-print "New Candidadte: " + str(test_vote.current_cand)
-test_vote.set_candidate(2)
-print "New Candidadte: " + str(test_vote.current_cand)
-test_vote.set_candidate_index(3)
-print "New Candidadte: " + str(test_vote.current_cand)
-
-print "================BEGIN REAL TEST=============="
-print "================This is a tight=============="
-print "====================race...=================="
-voting_structure2 = []
-voting_structure2.append(SenVote([3,1,2,4,5],202))
-voting_structure2.append(SenVote([4,2,1,3,5],201))
-voting_structure2.append(SenVote([1,2,3,4,5],200))
-voting_structure2.append(SenVote([3,2,4,1,5],101))
-voting_structure2.append(SenVote([3,4,2,5,1],10))
-cand_elec2 = 2
-total_race2 = SenRace(voting_structure2,cand_elec2)
-print 'THE QUOTA IS: ' + str(total_race2.quota)
-while total_race2.state != 'done':
-    total_race2.check_state()
+decimal_places = 6
+total_race = SenRace(voting_structure,cand_elec,decimal_places)
+print 'THE QUOTA IS: ' + str(total_race.quota)
+while total_race.state != 'done':
+    total_race.check_state()
     print 'Current race state: ' + str(total_race.state)
-    print 'Current elected: ' + str(total_race2.elected)
-    print 'Current eliminated: ' + str(total_race2.eliminated)
-    print 'Current Vote Count: ' + str(total_race2.votes_cand)
+    print 'Current elected: ' + str(total_race.elected)
+    print 'Current eliminated: ' + str(total_race.eliminated)
+    print 'Current Vote Count: ' + str(total_race.votes_cand)
     print '============================================='
-
