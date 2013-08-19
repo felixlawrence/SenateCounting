@@ -1,5 +1,6 @@
 import csv
 import math
+import numpy as np
 
 # Application for checking senate allocations of the following parties.
 
@@ -15,18 +16,51 @@ class SenVote(object):
         # Find the current (i.e. initial candidate we're voting for)
         self.current_cand_loc   = self.pref_list.index(1)
         self.current_cand       = self.current_cand_loc + 1
-    def distribute_candidate(self, cand_2_dist, cand_votes, cand_elected_eliminated):
+    def drop_bottom(self, cand_2_dist_loc):
         # Check if this vote is currently sitting on "Cand_2_dist"
         # If so, we need to move these votes to candidates still remaining
         # I.e. candidates who are not elected, and candidates who are not eliminated
-        self.random = 1
+        cand_2_dist = cand_2_dist_loc + 1
+    def change_votes(self, new_votes):
+        self.total = new_votes
+    def set_candidate(self, new_candidate):
+        self.current_cand_loc = new_candidate - 1
+        self.current_cand = new_candidate
+    def set_candidate_index(self, new_candidate_index):
+        self.current_cand_loc = new_candidate_index
+        self.current_cand = new_candidate_index + 1
+    def next_valid_candidate(self, elected, eliminated):
+        current_preference_number = self.pref_list[self.current_cand_loc]
+        # The current candidate is current_cand_loc, while their index down the
+        # vote preference array (i.e. the number we're currently at in the counting in 
+        # their preference form) is current_candidate_index
+        found_candidate = 0
+        while found_candidate == 0:
+            # Increment the preference number
+            current_preference_number = current_preference_number + 1
+            # Find it
+            current_cand_loc = self.pref_list.index(current_preference_number)
+            # Check if this new candidate is valid
+            if elected[current_cand_loc] + eliminated[current_cand_loc] == 0:
+                found_candidate = 1
+                self.current_cand_loc = current_cand_loc
+                self.current_cand = self.current_cand_loc + 1
+                
+        
+
+## The Senate Race Class
+# Contains the electoral information at each step.
+
+# TODO: Work out order of senate elect
         
 class SenRace(object):
     def __init__(self, vote_array, cands):
         # Defined by the vote in the vote array
+        self.round = 1
         self.candidates = len(vote_array[0].pref_list)
         self.cand_to_elect = cands
         self.votes = 0
+        self.vote_array = vote_array
         for vote in vote_array:
             self.votes = self.votes + vote.total
         self.votes_cand = []
@@ -100,9 +134,50 @@ class SenRace(object):
             # else we've got to drop from the bottom; so take the smallest person
             else:
                 self.state = 'dropbott'
+                # Candidates who have not been excluded:
+                cand_not_excl = [i for i, e in enumerate(self.eliminated) if e == 0]
+                min_votes = max(self.votes_cand)
+                for temp in cand_not_excl:
+                    min_votes = min(min_votes,self.votes_cand[temp])
+                # Now min_votes is the minimum number of votes for a candidate who hasn't been eliminated.
+                if min_votes == 0:
+                    # I.e. there are candidates who are on zero votes? We need to exclude them from the race now.
+                    to_exclude = [i for i, e in enumerate(self.votes_cand) if e == 0]
+                    for temp in to_exclude:
+                        # Eliminate them
+                        self.eliminated[temp] = 1
+                # Now that we've eliminated the candidates on zero votes; we can eliminate the next lowest
+                # candidate, first check who that candidate is; by recalculating
+                cand_not_excl = [i for i, e in enumerate(self.eliminated) if e == 0]
+                min_votes = max(self.votes_cand)
+                for temp in cand_not_excl:
+                    min_votes = min(min_votes,self.votes_cand[temp])
                 # TO DO: RANDOM CHOICE OF EQUAL BOTTOM CANDIDATES
-                self.distribute_excluded_stack.append(self.votes_cand.index(min(self.votes_cand)))
-                self.eliminated[self.votes_cand.index(min(self.votes_cand))] = 1
+                self.distribute_excluded_stack.append(self.votes_cand.index(min_votes))
+                self.eliminated[self.votes_cand.index(min_votes)] = 1
+        elif 'dropbott' in self.state:
+            # Drop the candidate from the bottom, and then assign to the static state.
+            self.state = 'static'
+            self.round = self.round + 1
+            ## TO DO: FIND MULTIPLE MINIMA AND PICK A RANDOM ONE
+            cand_to_drop = self.votes_cand.index(min(self.votes_cand))
+            # For each vote packet on this candidate, redistribute to a new candidate who is both not elected
+            # and not eliminated.
+            
+a = [0,0,1,3]
+b = [i for i, e in enumerate(a) if e != 0]
+c = min(b)
+print a[c]
+for i in b:
+    print a[i]
+    
+stack = []
+stack.append(1)
+#stack.append(2)
+#stack.append(3)
+stack = stack[1:]
+print "Stack: " + str(stack)
+           
             
             
 
@@ -141,5 +216,16 @@ print total_race.votes_cand
 print total_race.quota
 print total_race.elected
 
+#a = [0,0,1,3]
+#anp = np.array(a)
+#val = np.min(anp[np.nonzero(anp)])
+#print str(val)
+#print a.index(val)
 
-
+test_vote = SenVote([3,2,1,4],400)
+test_vote.next_valid_candidate([0,0,0,0],[0,0,0,0])
+print "New Candidadte: " + str(test_vote.current_cand)
+test_vote.set_candidate(2)
+print "New Candidadte: " + str(test_vote.current_cand)
+test_vote.set_candidate_index(3)
+print "New Candidadte: " + str(test_vote.current_cand)
