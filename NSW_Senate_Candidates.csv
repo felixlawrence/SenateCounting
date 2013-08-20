@@ -1,0 +1,111 @@
+Rank,State,Group,BallotPosition,Surname,GivenName,Party,Occupation,Address,Home Phone,Work Phone,Mobile Phone,Email
+1,NSW,LDP,1,LEYONHJELM,David,Liberal Democrats,Company Director,PO Box 636  DRUMMOYNE NSW 1470,,,0418 461 431,treasurer@ldp.org.au
+2,NSW,LDP,2,PETTETT,Jeffrey Marc,Liberal Democrats,Accountant,,,,,
+3,NSW,TCS,1,KOUTALIANOS,Bill,No Carbon Tax Climate Sceptics,Builder,1C Marshall St  PETERSHAM NSW 2049,,,0407 076 982,nocarbontax@bigpond.com
+4,NSW,TCS,2,McDOWALL,Mijina,No Carbon Tax Climate Sceptics,Missionary Pastor,PO Box 3598  MANUKA ACT 2603,0433 577 733,0433 577 733,0433 577 733,THENETWORKOFJESUSLOVE@GMAIL.COM
+5,NSW,DLP,1,McCAFFREY,Simon,Democratic Labour Party (DLP),Obstetrician,,,,,
+6,NSW,DLP,2,HANNA,Daniel John,Democratic Labour Party (DLP),Barrister,,,,,daniel@hanna.net.au
+7,NSW,SOL,1,FERGUSON,Tim,Senator Online (Internet Voting Bills/Issues),Teacher,,,,,
+8,NSW,SOL,2,BARRY,Tony,Senator Online (Internet Voting Bills/Issues),Actor,PO Box 1141  DARLINGHURST POST BOXES NSW 1300,,,,
+9,NSW,SOL,3,McKINNON,Don,Senator Online (Internet Voting Bills/Issues),Carpenter,,,,,
+10,NSW,VEP,1,HIGSON,Shayne,Voluntary Euthanasia Party,Photographer,,,,0403 625 456,shigson2013@gmail.com
+11,NSW,VEP,2,MULHALL,Loredana,Voluntary Euthanasia Party,Retired,,,,,
+12,NSW,UN2,1,WHALAN,Andrew,,Technical Systems Consultant,PO Box 1081  NEWCASTLE NSW 2300,,,,senate2013@votewhalan.com
+13,NSW,UN2,2,COOPER,Peter Grant,,Company Director,PO Box 100  TORONTO NSW 2283,,,,senate2013@votewhalan.com
+14,NSW,HMP,1,FUTTER,BJ,Help End Marijuana Prohibition (HEMP) Party,Electrical Contractor,,,,,wrwac11@gmail.com
+15,NSW,HMP,2,OLBOURNE,Jason,Help End Marijuana Prohibition (HEMP) Party,TV Producer,,,,,
+16,NSW,CA,1,CARTER,MaryLou,Carers Alliance,Legal Practice Manager,PO Box 133  DRUMMOYNE NSW 1470,0425 363 421,,0425 363 421,marylou.carter@carers.org.au
+17,NSW,CA,2,BUCKWALTER,Maree,Carers Alliance,Company Director,PO Box 133  DRUMMOYNE NSW 1470,,,0425 280 376,mjbuck2@carers.org.au
+18,NSW,WKP,1,TRANTER,Kellie,The Wikileaks Party,Lawyer,PO Box 248  MAITLAND NSW 2320,,02 4933 0564,0402 103 751,mail@kellietranterattorney.com.au
+19,NSW,WKP,2,BROINOWSKI,Alison,The Wikileaks Party,Academic,,,,0422 608 580,alison.broinowski@anu.edu.au
+20,NSW,RUA,1,BISHOP,Norm,Rise Up Australia Party,Retired,,,,,
+21,NSW,RUA,2,SOMERFIELD,Wayne,Rise Up Australia Party,Pilot,,,,,
+22,NSW,FUT,1,JANSSON,James,Future Party,Student,,,,,leader@futureparty.org.au
+23,NSW,FUT,2,HAGGERTY,James,Future Party,Software Engineer,,,,,james.haggerty@gmail.com
+24,NSW,CDP,1,PEEBLES,Robyn,Christian Democratic Party (Fred Nile Group),Minister of Religion,,,,0413 954 864,robyn.peebles@cdp.org.au
+25,NSW,CDP,2,LIONS,Deborah,Christian Democratic Party (Fred Nile Group),Business Owner,,,,,
+26,NSW,CDP,3,RAHME,Peter,Christian Democratic Party (Fred Nile Group),Minister of Religion,PO Box 5296  CHULLORA NSW 2190,,0418 249 989,,peter.rahme@cdp.org.au
+27,NSW,CDP,4,FRASER,Caroline Margaret,Christian Democratic Party (Fred Nile Group),Private Tutor,,02 4777 4322,02 4777 4322,0410 577 154,carolinefraser@gmail.com
+28,NSW,CDP,5,CLIFFORD,Ross,Christian Democratic Party (Fred Nile Group),Principal,,,02 9878 0201,,senate5@cdp.org.au
+29,NSW,ALP,1,CARR,Bob,Labor,Politician,,,,,
+30,NSW,ALP,2,CAMERON,Doug,Labor,Senator for NSW,,,02 4751 4288,,senator.cameron@aph.gov.au
+31,NSW,ALP,3,STEPHENS,Ursula,Labor,Senator,PO Box 112  GOULBURN NSW 2580,,02 4822 8155,,senator.stephens@aph.gov.au
+32,NSW,ALP,4,KOLOMEITZ,Glenn,Labor,Barrister,85 Headland Dr  GERROA NSW 2534,,,0402 343 407,GLENNKOLOMEITZ@GMAIL.COM
+33,NSW,ALP,5,NELMES,Nuatali,Labor,Councillor,PO Box 3507  MEREWETHER NSW 2291,,,0431 662 652,
+34,NSW,ALP,6,CHHIBBER,Bhupinder Kumar,Labor,Mechanical Engineer,,,,,
+35,NSW,KAP,1,MAILLER,Peter James,Katter's Australian Party,Primary Producer,,,,0400 661 384,peter.mailler@ausparty.org.au
+36,NSW,KAP,2,MAKA,Tony,Katter's Australian Party,Salesman,,,,0439 742 080,tmaka.kapnsw@gmail.com
+37,NSW,VCE,1,STEVENS,Criselee,Australian Voice,Education & Training,,,,0429 210 052,criselee1@hotmail.com
+38,NSW,VCE,2,FRANCIS,Keith,Australian Voice,Director,,,,0416 353 299,
+39,NSW,VCE,3,BLACK,Richard,Australian Voice,Lawyer,,,,,
+40,NSW,ASXP,1,DUNNE,Graeme,Sex Party,Business Manager,,,,0413 222 142,graeme@bodypolitics.com.au
+41,NSW,ASXP,2,RAYE,Sue,Sex Party,Company Director,,,,0411 525 422,suemraye@ozemail.com.au
+42,NSW,AFLP,1,LOWE,Bob,Australian Fishing and Lifestyle Party,Retired,,,,,
+43,NSW,AFLP,2,DEAN,Tim,Australian Fishing and Lifestyle Party,Electrical Superintendent,,,,,
+44,NSW,GRN,1,FAEHRMANN,Cate,The Greens,Environmentalist,,,,,cate@nsw.greens.org.au
+45,NSW,GRN,2,RYAN,James,The Greens,Solicitor,33 Brunker Street  KURRI KURRI NSW 2327,,,,
+46,NSW,GRN,3,BLATCHFORD,Penny,The Greens,Farmer,,,,,pennyblatchford@gmail.com
+47,NSW,GRN,4,HO,Christina,The Greens,University Lecturer,,,,0403 258 329,chrisho74@gmail.com
+48,NSW,GRN,5,FINDLEY,Amanda,The Greens,Farmer,,02 4454 1444,02 4454 3257,,
+49,NSW,GRN,6,SPIES-BUTCHER,Ben,The Greens,Academic,,,,,
+50,NSW,PUP,1,ADAMSON,Matthew,Palmer United Party,TV Presenter,,,,,
+51,NSW,PUP,2,WRIGHTSON,Suellen Marree,Palmer United Party,Local Government Councillor,PO Box 441  CESSNOCK NSW 2325,0400 307 930,,0400 307 930,suellenwrightson@gmail.com
+52,NSW,BAP,1,BROWN,Ray,Building Australia Party,Director,PO Box 7400  BAULKHAM HILLS NSW 2153,,,,ray.brown@buildingaustralia.org.au
+53,NSW,BAP,2,SYMINGTON,Melanie,Building Australia Party,Building Designer,,,02 4976 3413,,melanie@seasidehomesdesign.com.au
+54,NSW,UNP,1,SIMONDS,Peter,Uniting Australia Party,Teacher,,,,0439 488 028,petersimonds.uap@hotmail.com
+55,NSW,UNP,2,WATT,Tanya,Uniting Australia Party,Phlebotomist,,,,,
+56,NSW,ODR,1,OBRIEN,Rick,Stop The Greens,Freelance Media,,,,0422 437 259,rick@offroadmediagroup.com.au
+57,NSW,ODR,2,DE LIMA,Joaquim Eduardo,Stop The Greens,IT Professional,,,,,joaquim4gov@gmail.com
+58,NSW,SMK,1,BEIGER,Nicole,Smokers Rights,Self Employed,,0429 104 494,0429 104 494,0429 104 494,
+59,NSW,SMK,2,WHELAN,James Peter,Smokers Rights,Business Analyst,,,,0407 958 036,
+60,NSW,BTA,1,BOHM,Tim,Bullet Train For Australia,Designer,,,,,
+61,NSW,BTA,2,GLICK,Charlotte Rebecca,Bullet Train For Australia,Student,,,,,
+62,NSW,LPNP,1,PAYNE,Marise,Liberal,Senator,PO Box 1420  PARRAMATTA NSW 2150,,02 9687 8755,,senator.payne@aph.gov.au
+63,NSW,LPNP,2,WILLIAMS,John,The Nationals,Senator,144 Byron St  INVERELL NSW 2360,,02 6721 4500,,senator.williams@aph.gov.au
+64,NSW,LPNP,3,SINODINOS,Arthur,Liberal,Senator,,,02 9223 4388,,senator.sinodinos@aph.gov.au
+65,NSW,LPNP,4,HAY,Alan,The Nationals,Small Businessman,125 Steveys Forest Rd  OAKDALE NSW 2570,,,0403 366 110,alan.hay@nswnationals.org.au
+66,NSW,LPNP,5,CAMERON,Carolyn,Liberal,Market Access Director,Locked Bag 2  KINGS CROSS NSW 1340,,,,carolyn.cameron@nsw.liberal.org.au
+67,NSW,LPNP,6,CAMERON,Angus,Liberal,Investment Manager,PO Box 94  WAHROONGA NSW 2076,,,,angus.cameron@nsw.liberal.org.au
+68,NSW,APP,1,GRECH,Mark,Australian Protectionist Party,Network Administrator,,,,,
+69,NSW,APP,2,JOHNS,Christian,Australian Protectionist Party,Train Driver,,,,,
+70,NSW,AJP,1,PEARSON,Mark,Animal Justice Party,Executive Director,,0417 252 107,0417 252 107,0417 252 107,mark.animaljusticeparty@gmail.com
+71,NSW,AJP,2,VICKERS,Kate,Animal Justice Party,Journalist,,0416 025 809,0416 025 809,0416 025 809,vickers_kate@yahoo.com.au
+72,NSW,AFN,1,WALLBRIDGE,Darrell,Australia First Party,Sales & Marketing,,02 6652 3199,,,
+73,NSW,AFN,2,FRASER,Garth,Australia First Party,Clerk,,,,,
+74,NSW,AIN,1,TANKS,Bradley,Australian Independents,Business Consultant,,,,,vote1@bradleytanksnswsenate.com
+75,NSW,AIN,2,HIRST,Stephen,Australian Independents,Musician,,,,,
+76,NSW,DRF,1,HUNT,Miles,Drug Law Reform,Solicitor,47 Ormond St  PADDINGTON NSW 2021,,02 9146 4596,0402 621 671,miles@sklegal.com.au
+77,NSW,DRF,2,TRIMINGHAM,Tony,Drug Law Reform,Chief Executive Officer,PO Box 7363  LEURA NSW 2780,,,,
+78,NSW,SEP,1,BEAMS,Nick,Socialist Equality Party,Sep National Secretary,PO Box 574  STRAWBERRY HILLS NSW 2012,,02 8218 3222,,sep2013@sep.org.au
+79,NSW,SEP,2,HAMBIDES,Zac,Socialist Equality Party,Student,PO Box 574  STRAWBERRY HILLS NSW 2012,,02 8218 3222,,sep2013@sep.org.au
+80,NSW,DEM,1,VILLAVER,Ronaldo,Australian Democrats,Logistics Officer,PO Box 95  BLACKTOWN NSW 2148,,,0423 590 561,ronaldo.villaver@australian-democrats.org.au
+81,NSW,DEM,2,WALLACE,Andrew,Australian Democrats,Mental Health Support Officer,,,0401 953 414,0401 953 414,andrewwallace99@yahoo.com
+82,NSW,UN1,1,WANG,Tom,,Trade Advisor,,,,,tomwang@aaasenate.net
+83,NSW,UN1,2,O'TOOLE,Daniel,,Campaign Director,,,,,danielotoole@aaasenate.net
+84,NSW,FFP,1,ROSSITER,Fiona,Family First Party,Registered Nurse,PO Box 1809  ORANGE NSW 2800,,,0409 662 525,contact@fionarossiter.com.au
+85,NSW,FFP,2,HURLEY,Stan,Family First Party,Mediator,,,,0417 693 489,stan41@optusnet.com.au
+86,NSW,SPP,1,BOURKE,William,Stable Population Party,Political Party President,,,,,
+87,NSW,SPP,2,SPIKE,Kris,Stable Population Party,Teacher,,,,,
+88,NSW,ASP,1,HOUSEMAN,Karl Alexander,Shooters and Fishers,IT Manager,,,,,
+89,NSW,ASP,2,MUIRHEAD,Jim,Shooters and Fishers,Earth Moving,,,,,
+90,NSW,SCSG,1,FRASER,Gordon Graham,Stop CSG,Environmental Scientist,25 Charles Street  LISMORE SOUTH NSW 2480,02 6622 4221,,0414 644 893,gordongfraser@gmail.com
+91,NSW,SCSG,2,DEAN,Lynda Susan,Stop CSG,Civil Servant,16 Kingsley St  BYRON BAY NSW 2481,,02 6685 7657,,lynda@stopcsgparty.org.au
+92,NSW,RPA,1,McNALLY,Kerry,The Australian Republicans,Company Director,512 Parramatta Road  ASHFIELD NSW 2131,0425 228 306,02 9798 9395,0425 228 306,kerrym.mcnally@gmail.com
+93,NSW,RPA,2,BLAKE,Jason,The Australian Republicans,Supply Support Officer,2/4 Weatherly Close  NELSON BAY NSW 2315,02 4981 0315,02 4034 6772,0432 834 629,jason.blake7@bigpond.com
+94,NSW,SAL,1,McILROY,Jim,Socialist Alliance,Retired,PO Box 114  BROADWAY NSW 2007,,02 8070 9331,,
+95,NSW,SAL,2,DARE,Reg,Socialist Alliance,Security Officer,PO Box 114  BROADWAY NSW 2007,,,0438 236 442,
+96,NSW,NCP,1,THOMPSON,Andy,Non-Custodial Parents Party (Equal Parenting),Self Employed,PO Box 97  DOUGLAS PARK NSW 2569,02 4630 9072,0408 645 511,0408 645 511,louandy41@westnet.com.au
+97,NSW,NCP,2,THOMPSON,Josh,Non-Custodial Parents Party (Equal Parenting),Service Industry,PO Box 97  DOUGLAS PARK NSW 2569,,,,
+98,NSW,PIR,1,MOLLOY,Brendan,Pirate Party,Software Developer,PO Box 527  BALGOWLAH NSW 2093,,,0449 617 246,brendan.molloy@pirateparty.org.au
+99,NSW,PIR,2,CAMPBELL,David,Pirate Party,IT Consultant,65 Burg St  EAST MAITLAND NSW 2323,,,0438 837 704,david.campbell@pirateparty.org.au
+100,NSW,SPA,1,BRYCE,Ian,Secular Party of Australia,Engineer,4 Springside St  ROZELLE NSW 2039,,,0408 177 007,ianrbryce@gmail.com
+101,NSW,SPA,2,OWEN,Christopher,Secular Party of Australia,Software Engineer,,,,,cowen@secular.org.au
+102,NSW,AMEP,1,MYERS,Gary,Australian Motoring Enthusiast Party,Self Employed,,,,,myersgd1@bigpond.net.au
+103,NSW,AMEP,2,KIRKNESS,Daniel,Australian Motoring Enthusiast Party,Branch Manager,7/377 Newbridge Road  MOOREBANK NSW 2170,,02 9821 2499,0433 395 002,moorebank@pedders.com.au
+104,NSW,ON,1,HANSON,Pauline,One Nation,Self Employed,PO Box 610  SALAMANDER BAY NSW 2317,,,0404 050 550,contact@paulinehanson.net.au
+105,NSW,ON,2,MCCULLOCH,Kate,One Nation,Company Director,,0414 331 343,0414 331 343,0414 331 343,katemcculloch94@gmail.com
+106,NSW,ON,3,PLUMB,Aaron,One Nation,Student,,,,,
+107,NSW,,1,POULSEN,Ron,,Factory Worker,PO Box 164  CAMPSIE NSW 2194,02 9718 9698,,0413 450 981,cl_australia@optusnet.com.au
+108,NSW,,2,ASH,David,Independent,Barrister,,,,,d.ash@fjc.net.au
+109,NSW,,3,NATHAN,Sam,Independent,Chartered Accountant,,,,0424 955 743,sridhar2@live.com
+110,NSW,,4,La MELA,John,Independent,Real Estate,,,,0418 117 194,info@nswvaluer.yahoo.com.au
