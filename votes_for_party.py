@@ -161,7 +161,7 @@ def total_election ( prefs, cands, ausst, no_of_electors, parameters, vote_dicti
     party_elected       = final_party_count(curr_elected, cand_to_group, name_dictionary)
     party_elected_list  = final_party_count_to_list(party_elected, cand_to_group, name_dictionary)
 
-    return vote_dictionary, name_dictionary, group_list, votes, vote_list_ticket_data, cand_to_group, final_state, output, quota, output_party, output_party2, fractional_loss, curr_elected, party_elected, party_elected_list
+    return votes, vote_list_ticket_data, cand_to_group, final_state, output, quota, output_party, output_party2, fractional_loss, curr_elected, party_elected, party_elected_list
 
 
 

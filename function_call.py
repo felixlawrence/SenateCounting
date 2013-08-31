@@ -110,7 +110,10 @@ senate_count = []
 for i in range(100):#range(product):
     # Want to move the setup out of the loop
     vote_dictionary, name_dictionary, group_list, t_votes = group_setup_from_list(gpptv_data,group_batch_from_iterable(primaries,i))
-    vote_dictionary, name_dictionary, group_list, votes, vote_list_ticket_data, cand_to_group, final_state, output, quota, output_party, output_party2, fractional_loss, curr_elected, party_elected, party_elected_list = total_election(prefs,cands,ausst,no_of_electors,parameters,vote_dictionary,name_dictionary,group_list,t_votes)
+    (votes, vote_list_ticket_data,
+        cand_to_group, final_state, output, quota, output_party, output_party2,
+        fractional_loss, curr_elected, party_elected, party_elected_list
+        ) = total_election(prefs,cands,ausst,no_of_electors,parameters,vote_dictionary,name_dictionary,group_list,t_votes)
     #print quota
     if sum(party_elected) < 6:
         print 'ERROR AT: ' + str(i)
