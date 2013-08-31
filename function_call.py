@@ -1,96 +1,206 @@
 from sen_dis import sen_dis
+from votes_for_party import party_vote
+from votes_for_party import party_vote_adjusted
+from votes_for_party import candidates_elected
+from votes_for_party import frac_loss
+from votes_for_party import final_party_count
+from votes_for_party import final_party_count_to_list
+from votes_for_party import total_election
+from votes_for_party import group_setup
+from votes_for_party import group_batch_from_list
+from votes_for_party import group_batch_from_iterable
+from votes_for_party import group_setup_from_list
 import csv
 import math
 import copy
+import gc
 
+index = 0
+# State List
+ausst = []
+ausst.append(['New South Wales','Victoria','Queensland','Western Australia','South Australia','Tasmania','Australian Capital Territory','Northern Territory'])
+ausst.append(['NSW','VIC','QLD','WA','SA','TAS','ACT','NT'])
+ausst.append([6,6,6,6,6,6,2,2])
 ## Source files.
 # Preference flows for above the line votes sorted by party letter.
 # Each row is of the form:
 # Party Group , How Many Forms? , Preferences by ballot. 
-prefs = 'NSW_Senate_Preferences.csv'
+prefs = ausst[1][index] + '_Senate_Preferences.csv'
 # List of Candidates for the Senate sorted by ballot position
-cands = 'NSW_Senate_Candidates.csv'
+cands = ausst[1][index] + '_Senate_Candidates.csv'
 # A list of the letter Groups along with the
-gpptv = 'NSW_Groups_Parties_Votes.csv'
+gpptv = ausst[1][index] + '_Groups_Parties_Votes.csv'
 
 
-# Create a dictionary of votes for all of the groups that have GVTs
-no_of_electors = 1000; # For each state define number of electors
-vote_dictionary = {}
-t_votes = 0
-with open(gpptv,'rb') as csvfile:
-    spamreader = csv.reader(csvfile,delimiter=',')
-    temp1 = 0
-    for row in spamreader:
-        t_votes = float(float(t_votes) + float(row[2].strip()))
-        vote_dictionary[row[0].strip()] = row[2].strip()
-        temp1 = temp1 + 1
-        
-# Create the vote list to pass into the algorithm; appending all of
-# the preference data.
-votes = []
-with open(prefs,'rb') as csvfile:
-    spamreader = csv.reader(csvfile,delimiter=',')
-    temp1 = 0
-    for row in spamreader:
-        no_of_votes = int(math.floor(float(float(float(vote_dictionary[row[0].strip()]) / float(row[1])) * float(no_of_electors) / float(t_votes))))
-        print no_of_votes
-        votes.append([[],no_of_votes])
-        temp2 = 2
-        while temp2 < len(row):
-            votes[temp1][0].append(int(row[temp2]))
-            temp2 = temp2 + 1
-        temp1 = temp1 + 1
-        
+# Iterable type
+list = []
+list.append([1.89, 2.31])       #Liberal Democrats
+list.append([0.05])             #No Carbon Tax Climate Sceptics
+list.append([0.54, 0.66])       #Democratic Labour Party (DLP)
+list.append([0.05])             #Senator Online (Internet Voting Bills/Issues)
+list.append([0.05])             #Voluntary Euthanasia Party
+list.append([0.01])             #
+list.append([0.05])             #Help End Marijuana Prohibition (HEMP) Party
+list.append([0.28])             #Carers Alliance
+list.append([0.8, 1.8, 2.8])    #The Wikileaks Party
+list.append([0.68])             #Rise Up Australia Party
+list.append([0.03])             #Future Party
+list.append([2.25, 2.75])       #Christian Democratic Party (Fred Nile Group)
+list.append([27, 29, 31])       #Labor
+list.append([0.9, 1.9, 3.1])    #Katter's Australian Party
+list.append([0.05])             #Australian Voice
+list.append([1.8, 2.2])         #Sex Party
+list.append([1.197, 1.463])     #Australian Fishing and Lifestyle Party
+list.append([8, 9, 10])         #The Greens
+list.append([0.9, 1.9, 3.1])    #Palmer United Party
+list.append([0.23])             #Building Australia Party
+list.append([0.1])              #Uniting Australia Party
+list.append([0.5])              #Stop The Greens
+list.append([0.1])              #Smokers Rights
+list.append([0.08])             #Bullet Train For Australia
+list.append([39, 41, 43])       #Liberal
+list.append([0.05])             #Australian Protectionist Party
+list.append([0.65])             #Animal Justice Party
+list.append([0.3])              #Australia First Party
+list.append([0.06])             #Australian Independents
+list.append([0.07])             #Drug Law Reform
+list.append([0.05])             #Socialist Equality Party
+list.append([0.6])              #Australian Democrats
+list.append([0.02])             #
+list.append([1.26, 1.54])       #Family First Party
+list.append([0.1])              #Stable Population Party
+list.append([2.88, 3.52])       #Shooters and Fishers
+list.append([0.15])             #Stop CSG
+list.append([0.13])             #The Australian Republicans
+list.append([0.1])              #Socialist Alliance
+list.append([0.09])             #Non-Custodial Parents Party (Equal Parenting)
+list.append([0.5])              #Pirate Party
+list.append([0.1])              #Secular Party of Australia
+list.append([0.05])             #Australian Motoring Enthusiast Party
+list.append([1.6, 2.8, 4])      #One Nation
+product = 1
+for elt in list: product = product * len(elt)
+print product
+# Regular type
+#list = []
+#list.append([2.31,0.21,0.75,0.07,0,0,0,0.28,0,0,0,1.94,34.54,0,0,1.77,0,9.69,0,0.26,0,0,0,0,40.95,0,0,0,0,0,0.09,0.68,0,0.94,0,2.33,0,0,0.56,0.09,0,0.1,0,2.3])
+#list.append([2.31,0.21,0.75,0.07,0,0,0,0.28,0,0,0,1.94,34.54,0,0,1.77,0,9.69,0,0.26,0,0,0,0,40.95,0,0,0,0,0,0.09,0.68,0,0.94,0,2.33,0,0,0.56,0.09,0,0.1,0,4.3])
+
+## Other Variables
+no_of_electors = 100000; # For each state define number of electors
+
 # Define the parameters to be passed into the function
 # First is the number of people to be elected
 # Second is the number of decimal places to take overflow to
-parameters = [6,6]
+# Third is verbose (or not) (1 for verbose, anything for not)
+# Fourth is the state number. [From the list above]
+# Fifth is the flag for Senate Style overflow (0) vs. Proportional Rep Overflow (1) vs. others?
+parameters = [ausst[2][index],6,0,0,0]
 
-# Run the election
-final_state = sen_dis(votes,parameters)
+# Run the election once, to set a baseline for our analysis.
+vote_dictionary, name_dictionary, group_list, t_votes = group_setup(gpptv)
+senate_array = []
+senate_count = []
+#for i in range(product):
+for i in range(1):
+    #vote_dictionary, name_dictionary, group_list, t_votes = group_setup_from_list(gpptv,group_batch_from_iterable(list,i))
+    vote_dictionary, name_dictionary, group_list, t_votes = group_setup(gpptv)
+    vote_dictionary, name_dictionary, group_list, votes, vote_list_ticket_data, cand_to_group, final_state, output, quota, output_party, output_party2, fractional_loss, curr_elected, party_elected, party_elected_list = total_election(prefs,cands,gpptv,ausst,no_of_electors,parameters,vote_dictionary,name_dictionary,group_list,t_votes)
+    #print quota
+    if sum(party_elected) < 6:
+        print 'ERROR AT: ' + str(i)
+    if party_elected in senate_array:
+        index = senate_array.index(party_elected)
+        senate_count[index] = senate_count[index] + 1
+    else:
+        senate_array.append(copy.deepcopy(party_elected))
+        senate_count.append(1)
+    if int(math.floor(i/100))*100 == int(i):
+        print i
+        
+print senate_array
+print senate_count
+with open(ausst[1][index] + "_output.csv", "w") as text_file:
+    for i in range(len(senate_count)):
+        to_print = str(senate_count[i])
+        for element in senate_array[i]: to_print = to_print + ',' + str(element)
+        text_file.write('{0}\n'.format(to_print, end='\n'))
+        print to_print
+#####################################################################################################################
+##### NOW THAT WE HAVE A BASELINE; WE NOW WANT TO RUN ANALYSIS FOR EVERY GROUP RUNNING AS TO HOW MUCH MORE VOTE #####
+##### THEY NEED IN ORDER TO ELECT ONE MORE CANDIDATE THAN THEY CURRENTLY HAVE ELECTED                           #####
+##### HOWEVER, WE ALSO WANT TO BE LOOKING FOR INTERESTING DILEMMAS; I.E. FOR CASES WHERE INCREASED VOTE LEADS   #####
+##### TO DIFFERENT CANDIDATES BEING ELECTED FROM OTHER GROUPS                                                   #####
+#####################################################################################################################
 
-# Working out the fractional vote loss, and printing each vote round.
-fractional_vote_loss = 0
-for vote_round in final_state.historical_votes_cand:
-    #print vote_round
-    candidate = 0
-    fractional_vote_loss = 0
-    while candidate < len(vote_round[0]):
-        if vote_round[0][candidate] >= final_state.quota and vote_round[0][candidate] <= final_state.quota + 0.1:
-            fractional_vote_loss = fractional_vote_loss + vote_round[0][candidate] - final_state.quota
-        candidate = candidate + 1
-    #print fractional_vote_loss
+# For each party in party; check the amount of votes needed for something interesting to happen
+# Simple algorithm; increase the number of votes one by one.
+# Way to do this; copy the senate file and modify the entries, resave it and run the analysis.
 
-# Extract final information (i.e. who got elected)
-final_information = final_state.historical_votes_cand[-1]
 
-# List of all people elected
-temp = 0
-elected_candidates = []
-while temp < len(final_information[1]):
-    if final_information[1][temp] == 1 or final_information[0][temp] >= final_state.quota:
-        elected_candidates.append(temp)
-    temp = temp + 1
 
-# Correct the order, accounting for the final elected person who may not appear!
-elected_candidates_correct_order = final_state.candidate_elected_order    
-for candidate in elected_candidates:
-    if not candidate in elected_candidates_correct_order:
-        elected_candidates_correct_order.append(candidate)
-elected_candidates = elected_candidates_correct_order
+# The construction array for the text we will display:
+text_construction = []
+text_construction.append(['heading1','Senate Results for ' + ausst[0][parameters[3]] + ' (' + ausst[1][parameters[3]] + ')'])
+text_construction.append(['heading3','List of Elected Candidates'])
+text_construction.append(['winarray',['Election Order','Party Name','Candidate']])
+index2 = len(text_construction)-1
+for line in output:
+    if 'over' in line[0]:
+        text_construction[index2].append([str(line[1]),str(name_dictionary[str(cand_to_group[line[2][0]][0])]),str(cand_to_group[line[2][0]][1])])
+    elif 'last' in line[0]:
+        for index in range(len(line[1])):
+            text_construction[index2].append([str(line[1][index]),str(name_dictionary[str(cand_to_group[line[2][index]][0])]),str(cand_to_group[line[2][index]][1])])
+text_construction.append(['heading2','Detailed Count and Distribution'])
 
-# Print out their parties and names
-elected_dictionary = {}
-with open(cands,'rb') as csvfile:
-    spamreader = csv.reader(csvfile,delimiter=',')
-    temp1 = -1
-    elected = 0
-    for row in spamreader:
-        if temp1 in elected_candidates:
-            elected_dictionary[temp1] = ' | ' + str(row[6]) + ' | ' + str(row[4]) + ', ' + str(row[5])
-        temp1 = temp1 + 1
+# Man, how good is the O.C.
+# I really hope someone error checks this and thinks about watching the O.C. season 1. I'm watching episode 4 right now.
+# I miss the old days.
+# Life was simpler.
+# sigh.
+# Back to work.
 
-print elected_candidates        
-for temp in range(len(elected_candidates)):
-    print 'Elected No. ' + str(temp + 1) + elected_dictionary[elected_candidates[temp]]
+# Now we run the text analysis of the
+round = 0
+for line in output:
+    # Begin the printing / output of the relevant data
+    #print line
+    round = round + 1
+    if 'init' in line[0]:
+        text_construction.append(['heading3', 'Round ' + str(round) + '. The initial allocation of votes is as follows:'])
+        # Create the matrix of results.
+        
+    elif 'over' in line[0]:
+        rand = 0
+    elif 'last' in line[0]:
+        for index in range(len(line[1])):
+            rand = 0
+    elif 'drop' in line[0]:
+        rand = 0
+        
+    elif 'zero' in line[0]:
+        round = round - 1
+        
+
+
+#print text_construction
+
+# Variables needed for the output:
+round = 0
+for line in output:
+    # Begin the printing / output of the relevant data
+    #print line
+    round = round + 1
+    if 'init' in line[0]:
+        print 'Round: ' + str(round) + ' | Initial vote allocation'
+    elif 'over' in line[0]:
+        print 'Round: ' + str(round) + ' | Elected No. ' + str(line[1]) + ' | Group ' + str(cand_to_group[line[2][0]][0]) + ' | ' + str(name_dictionary[str(cand_to_group[line[2][0]][0])]) + ' | ' + str(cand_to_group[line[2][0]][1])
+    elif 'last' in line[0]:
+        for index in range(len(line[1])):
+            print 'Round: ' + str(round) + ' | Elected No. ' + str(line[1][index]) + ' | Group ' + str(cand_to_group[line[2][index]][0]) + ' | ' + str(name_dictionary[str(cand_to_group[line[2][index]][0])]) + ' | ' + str(cand_to_group[line[2][index]][1])
+    elif 'drop' in line[0]:
+        print 'Round: ' + str(round) + ' | Excluded in place: ' + str(line[1]) + ' | Group ' + str(cand_to_group[line[2][0]][0]) + ' | ' + str(name_dictionary[str(cand_to_group[line[2][0]][0])]) + ' | ' + str(cand_to_group[line[2][0]][1])
+        # There may be more than one candidate elected in this last overflow. So be sure to get it right.
+    elif 'zero' in line[0]:
+        round = round - 1
+        print str(len(line[1])) + ' candidates eliminated with zero votes.'
