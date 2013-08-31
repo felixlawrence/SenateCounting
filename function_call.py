@@ -98,7 +98,7 @@ no_of_electors = 100000; # For each state define number of electors
 # Second is the number of decimal places to take overflow to
 # Third is verbose (or not) (1 for verbose, anything for not)
 # Fourth is the state number. [From the list above]
-# Fifth is the flag for Senate Style overflow (0) vs. Proportional Rep Overflow (1) vs. others?
+# Fifth is the flag for Senate Style overflow (0) vs. Proportional Rep Overflow (1) vs. others? #TODO make this a boolean!
 parameters = [ausst[2][state_i],6,0,0,0]
 
 # Run the election once, to set a baseline for our analysis.
