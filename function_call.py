@@ -32,55 +32,55 @@ prefs = ausst[1][state_i] + '_Senate_Preferences.csv'
 # List of Candidates for the Senate sorted by ballot position
 cands = ausst[1][state_i] + '_Senate_Candidates.csv'
 # A list of the letter Groups along with the
-gpptv = ausst[1][state_i] + '_Groups_Parties_Votes.csv'
-
+gpptv_data = pd.read_csv(ausst[1][state_i] + '_Groups_Parties_Votes.csv', header=None)
 
 # Iterable type
-primaries = []
-primaries.append([1.89, 2.31])       #Liberal Democrats
-primaries.append([0.05])             #No Carbon Tax Climate Sceptics
-primaries.append([0.54, 0.66])       #Democratic Labour Party (DLP)
-primaries.append([0.05])             #Senator Online (Internet Voting Bills/Issues)
-primaries.append([0.05])             #Voluntary Euthanasia Party
-primaries.append([0.01])             #
-primaries.append([0.05])             #Help End Marijuana Prohibition (HEMP) Party
-primaries.append([0.28])             #Carers Alliance
-primaries.append([0.8, 1.8, 2.8])    #The Wikileaks Party
-primaries.append([0.68])             #Rise Up Australia Party
-primaries.append([0.03])             #Future Party
-primaries.append([2.25, 2.75])       #Christian Democratic Party (Fred Nile Group)
-primaries.append([27, 29, 31])       #Labor
-primaries.append([0.9, 1.9, 3.1])    #Katter's Australian Party
-primaries.append([0.05])             #Australian Voice
-primaries.append([1.8, 2.2])         #Sex Party
-primaries.append([1.197, 1.463])     #Australian Fishing and Lifestyle Party
-primaries.append([8, 9, 10])         #The Greens
-primaries.append([0.9, 1.9, 3.1])    #Palmer United Party
-primaries.append([0.23])             #Building Australia Party
-primaries.append([0.1])              #Uniting Australia Party
-primaries.append([0.5])              #Stop The Greens
-primaries.append([0.1])              #Smokers Rights
-primaries.append([0.08])             #Bullet Train For Australia
-primaries.append([39, 41, 43])       #Liberal
-primaries.append([0.05])             #Australian Protectionist Party
-primaries.append([0.65])             #Animal Justice Party
-primaries.append([0.3])              #Australia First Party
-primaries.append([0.06])             #Australian Independents
-primaries.append([0.07])             #Drug Law Reform
-primaries.append([0.05])             #Socialist Equality Party
-primaries.append([0.6])              #Australian Democrats
-primaries.append([0.02])             #
-primaries.append([1.26, 1.54])       #Family First Party
-primaries.append([0.1])              #Stable Population Party
-primaries.append([2.88, 3.52])       #Shooters and Fishers
-primaries.append([0.15])             #Stop CSG
-primaries.append([0.13])             #The Australian Republicans
-primaries.append([0.1])              #Socialist Alliance
-primaries.append([0.09])             #Non-Custodial Parents Party (Equal Parenting)
-primaries.append([0.5])              #Pirate Party
-primaries.append([0.1])              #Secular Party of Australia
-primaries.append([0.05])             #Australian Motoring Enthusiast Party
-primaries.append([1.6, 2.8, 4])      #One Nation
+primaries = [
+    [1.89, 2.31],       #Liberal Democrats
+    [0.05],             #No Carbon Tax Climate Sceptics
+    [0.54, 0.66],       #Democratic Labour Party (DLP)
+    [0.05],             #Senator Online (Internet Voting Bills/Issues)
+    [0.05],             #Voluntary Euthanasia Party
+    [0.01],             #
+    [0.05],             #Help End Marijuana Prohibition (HEMP) Party
+    [0.28],             #Carers Alliance
+    [0.8, 1.8, 2.8],    #The Wikileaks Party
+    [0.68],             #Rise Up Australia Party
+    [0.03],             #Future Party
+    [2.25, 2.75],       #Christian Democratic Party (Fred Nile Group)
+    [27, 29, 31],       #Labor
+    [0.9, 1.9, 3.1],    #Katter's Australian Party
+    [0.05],             #Australian Voice
+    [1.8, 2.2],         #Sex Party
+    [1.197, 1.463],     #Australian Fishing and Lifestyle Party
+    [8, 9, 10],         #The Greens
+    [0.9, 1.9, 3.1],    #Palmer United Party
+    [0.23],             #Building Australia Party
+    [0.1],              #Uniting Australia Party
+    [0.5],              #Stop The Greens
+    [0.1],              #Smokers Rights
+    [0.08],             #Bullet Train For Australia
+    [39, 41, 43],       #Liberal
+    [0.05],             #Australian Protectionist Party
+    [0.65],             #Animal Justice Party
+    [0.3],              #Australia First Party
+    [0.06],             #Australian Independents
+    [0.07],             #Drug Law Reform
+    [0.05],             #Socialist Equality Party
+    [0.6],              #Australian Democrats
+    [0.02],             #
+    [1.26, 1.54],       #Family First Party
+    [0.1],              #Stable Population Party
+    [2.88, 3.52],       #Shooters and Fishers
+    [0.15],             #Stop CSG
+    [0.13],             #The Australian Republicans
+    [0.1],              #Socialist Alliance
+    [0.09],             #Non-Custodial Parents Party (Equal Parenting)
+    [0.5],              #Pirate Party
+    [0.1],              #Secular Party of Australia
+    [0.05],             #Australian Motoring Enthusiast Party
+    [1.6, 2.8, 4],      #One Nation
+]
 product = 1
 for elt in primaries:
     product = product * len(elt)
@@ -102,14 +102,15 @@ no_of_electors = 100000; # For each state define number of electors
 parameters = [ausst[2][state_i],6,0,0,0]
 
 # Run the election once, to set a baseline for our analysis.
-vote_dictionary, name_dictionary, group_list, t_votes = group_setup(gpptv)
+vote_dictionary, name_dictionary, group_list, t_votes = group_setup(gpptv_data)
 senate_array = []
 senate_count = []
 #for i in range(1):
 #    vote_dictionary, name_dictionary, group_list, t_votes = group_setup(gpptv)
 for i in range(100):#range(product):
-    vote_dictionary, name_dictionary, group_list, t_votes = group_setup_from_list(gpptv,group_batch_from_iterable(primaries,i))
-    vote_dictionary, name_dictionary, group_list, votes, vote_list_ticket_data, cand_to_group, final_state, output, quota, output_party, output_party2, fractional_loss, curr_elected, party_elected, party_elected_list = total_election(prefs,cands,gpptv,ausst,no_of_electors,parameters,vote_dictionary,name_dictionary,group_list,t_votes)
+    # Want to move the setup out of the loop
+    vote_dictionary, name_dictionary, group_list, t_votes = group_setup_from_list(gpptv_data,group_batch_from_iterable(primaries,i))
+    vote_dictionary, name_dictionary, group_list, votes, vote_list_ticket_data, cand_to_group, final_state, output, quota, output_party, output_party2, fractional_loss, curr_elected, party_elected, party_elected_list = total_election(prefs,cands,ausst,no_of_electors,parameters,vote_dictionary,name_dictionary,group_list,t_votes)
     #print quota
     if sum(party_elected) < 6:
         print 'ERROR AT: ' + str(i)

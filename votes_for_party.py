@@ -8,22 +8,20 @@ import itertools
 from itertools import permutations, islice
 #import numpy as np
 
-def group_setup ( gpptv ):
+def group_setup ( gpptv_data ):
     # Create a dictionary of votes for all of the groups that have GVTs
     vote_dictionary = {}    # Dictionary of vote values for each group
     name_dictionary = {}    # Dictionary of names for each group
     group_list      = []
     short_group_list = []
     t_votes = 0             # Sum of all votes in the file (should be greater than 0)
-    with open(gpptv,'rb') as csvfile:
-        spamreader = csv.reader(csvfile,delimiter=',')
-        temp1 = 0
-        for row in spamreader:
-            t_votes = float(float(t_votes) + float(row[2].strip()))
-            vote_dictionary[row[0].strip()] = row[2].strip()
-            name_dictionary[row[0].strip()] = row[1].strip()
-            group_list.append(row[0].strip())
-            temp1 = temp1 + 1
+    temp1 = 0
+    for row in gpptv_data.values:
+        t_votes = float(float(t_votes) + float(row[2]))
+        vote_dictionary[row[0]] = row[2]
+        name_dictionary[row[0]] = row[1]
+        group_list.append(row[0])
+        temp1 = temp1 + 1
     for group in group_list:
         if not group in short_group_list:
             short_group_list.append(group)
@@ -57,22 +55,20 @@ def group_batch_from_iterable ( list_to_iterate, index ):
     #return temp15
     return list(next(islice(iter_input,index,None),default))
 
-def group_setup_from_list ( gpptv , primaries ):
+def group_setup_from_list ( gpptv_data , primaries ):
     # Create a dictionary of votes for all of the groups that have GVTs
     vote_dictionary = {}    # Dictionary of vote values for each group
     name_dictionary = {}    # Dictionary of names for each group
     group_list      = []
     short_group_list = []
     t_votes = 0             # Sum of all votes in the file (should be greater than 0)
-    with open(gpptv,'rb') as csvfile:
-        spamreader = csv.reader(csvfile,delimiter=',')
-        temp1 = 0
-        for row in spamreader:
-            t_votes = float(float(t_votes) + float(row[2].strip()))
-            vote_dictionary[row[0].strip()] = row[2].strip()
-            name_dictionary[row[0].strip()] = row[1].strip()
-            group_list.append(row[0].strip())
-            temp1 = temp1 + 1
+    temp1 = 0
+    for row in gpptv_data.values:
+        t_votes = float(float(t_votes) + float(row[2]))
+        vote_dictionary[row[0]] = row[2]
+        name_dictionary[row[0]] = row[1]
+        group_list.append(row[0])
+        temp1 = temp1 + 1
     for group in group_list:
         if not group in short_group_list:
             short_group_list.append(group)
@@ -89,7 +85,7 @@ def group_setup_from_list ( gpptv , primaries ):
 
     return vote_dictionary, name_dictionary, group_list, t_votes
 
-def total_election ( prefs, cands, gpptv, ausst, no_of_electors, parameters, vote_dictionary, name_dictionary, group_list, t_votes):
+def total_election ( prefs, cands, ausst, no_of_electors, parameters, vote_dictionary, name_dictionary, group_list, t_votes):
 
     # Create the vote list to pass into the algorithm; appending all of
     # the preference data.
