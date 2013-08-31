@@ -31,9 +31,9 @@ def group_setup ( gpptv ):
         short_group_list.append('Ungrouped')
     vote_dictionary['Ungrouped'] = '0'
     return vote_dictionary, name_dictionary, group_list, t_votes
-    
-def group_batch_from_list ( list, index ):
-    return list[index]
+
+def group_batch_from_list ( input_list, index ):
+    return input_list[index]
 
 def group_batch_from_iterable ( list_to_iterate, index ):
     default = None
@@ -56,8 +56,8 @@ def group_batch_from_iterable ( list_to_iterate, index ):
     #for i in range(len(temp15)): temp15[i] = float(copy.deepcopy(temp[i]))
     #return temp15
     return list(next(islice(iter_input,index,None),default))
-    
-def group_setup_from_list ( gpptv , list ):
+
+def group_setup_from_list ( gpptv , primaries ):
     # Create a dictionary of votes for all of the groups that have GVTs
     vote_dictionary = {}    # Dictionary of vote values for each group
     name_dictionary = {}    # Dictionary of names for each group
@@ -82,15 +82,15 @@ def group_setup_from_list ( gpptv , list ):
     index = 0
     t_votes = 0
     for group in group_list:
-        if index < len(list):
-            vote_dictionary[group] = list[index]
-            t_votes = t_votes + list[index]
+        if index < len(primaries):
+            vote_dictionary[group] = primaries[index]
+            t_votes = t_votes + primaries[index]
         index = index + 1
-    
+
     return vote_dictionary, name_dictionary, group_list, t_votes
 
 def total_election ( prefs, cands, gpptv, ausst, no_of_electors, parameters, vote_dictionary, name_dictionary, group_list, t_votes):
-    
+
     # Create the vote list to pass into the algorithm; appending all of
     # the preference data.
     votes = []
@@ -151,7 +151,7 @@ def total_election ( prefs, cands, gpptv, ausst, no_of_electors, parameters, vot
     curr_elected        = [] # List of currently elected people
     for line in output:
         # Candidates who are currently elected
-        curr_elected = candidates_elected(line,curr_elected)    
+        curr_elected = candidates_elected(line,curr_elected)
         # Work out the fractional loss
         f_loss = frac_loss(line,curr_elected,f_loss,quota)
         fractional_loss.append(f_loss)
@@ -164,7 +164,7 @@ def total_election ( prefs, cands, gpptv, ausst, no_of_electors, parameters, vot
     # Output the number candidates elected for each party
     party_elected       = final_party_count(curr_elected, cand_to_group, name_dictionary)
     party_elected_list  = final_party_count_to_list(party_elected, cand_to_group, name_dictionary)
-    
+
     return vote_dictionary, name_dictionary, group_list, votes, vote_list_ticket_data, cand_to_group, final_state, output, quota, output_party, output_party2, fractional_loss, curr_elected, party_elected, party_elected_list
 
 
@@ -174,13 +174,13 @@ def party_vote( LINE, CAND_TO_GROUP, GROUP_TO_PARTY, QUOTA ):
     # CAND_TO_GROUP[candidate][0] = group
     # CAND_TO_GROUP[candidate][1] = name of candidate
     # GROUP_TO_PARTY[group] = party
-    
+
     # Firstly; construct a list of all of the groups:
     GROUP_LIST = []
     for group in CAND_TO_GROUP:
         if not group[0] in GROUP_LIST: GROUP_LIST.append(group[0])
-    
-    
+
+
     # We want to return the current vote count for each party; as a list of lists.
     vote_count = []
     for group in GROUP_LIST: vote_count.append([0,0,0])
@@ -236,7 +236,7 @@ def party_vote( LINE, CAND_TO_GROUP, GROUP_TO_PARTY, QUOTA ):
             vote_count[new_index][2] = float(float(vote_count[new_index][0])/float(total_votes)*100)
     else:
         vote_count = 'ERROR'
-        
+
     return vote_count
 
 def party_vote_adjusted( LINE, CAND_TO_GROUP, GROUP_TO_PARTY, QUOTA , OUTPUT_PARTY):
@@ -244,15 +244,15 @@ def party_vote_adjusted( LINE, CAND_TO_GROUP, GROUP_TO_PARTY, QUOTA , OUTPUT_PAR
     # CAND_TO_GROUP[candidate][0] = group
     # CAND_TO_GROUP[candidate][1] = name of candidate
     # GROUP_TO_PARTY[group] = party
-    
+
     # Firstly; construct a list of all of the groups:
     GROUP_LIST = []
     for group in CAND_TO_GROUP:
         if not group[0] in GROUP_LIST: GROUP_LIST.append(group[0])
-    
+
     # Now subtract off the quotas on a per group basis.
-    
-    
+
+
     # We want to return the current vote count for each party; as a list of lists.
     vote_count = []
     for group in GROUP_LIST: vote_count.append([0,0,0])
@@ -308,9 +308,9 @@ def party_vote_adjusted( LINE, CAND_TO_GROUP, GROUP_TO_PARTY, QUOTA , OUTPUT_PAR
             vote_count[new_index][2] = float(float(vote_count[new_index][0])/float(total_votes)*100)
     else:
         vote_count = 'ERROR'
-        
+
     return vote_count
-    
+
 def candidates_elected ( LINE , CURR_ELECTED ):
     # Returns a list of all candidates that have been elected / distributed during this line
     candidates = CURR_ELECTED
@@ -320,7 +320,7 @@ def candidates_elected ( LINE , CURR_ELECTED ):
     elif 'over' in LINE[0]:
         candidates.append(LINE[2][0])
     return candidates
-    
+
 def frac_loss ( LINE , CURR_ELECTED , FRACTIONAL_LOSS , QUOTA):
     # Run through the people currently elected, and look at their fractional losses in the vote matrix.
     f_loss = FRACTIONAL_LOSS
@@ -341,19 +341,19 @@ def frac_loss ( LINE , CURR_ELECTED , FRACTIONAL_LOSS , QUOTA):
             if LINE[9][candidate] > QUOTA:
                 f_loss = f_loss + LINE[9][candidate] - QUOTA
     return f_loss
-    
-    
+
+
 def final_party_count( FINAL_CANDIDATES, CAND_TO_GROUP, GROUP_TO_PARTY ):
     # FINAL_CANDIDATES
     # CAND_TO_GROUP[candidate][0] = group
     # CAND_TO_GROUP[candidate][1] = name of candidate
     # GROUP_TO_PARTY[group] = party
-    
+
     # Firstly; construct a list of all of the groups:
     GROUP_LIST = []
     for group in CAND_TO_GROUP:
         if not group[0] in GROUP_LIST: GROUP_LIST.append(group[0])
-        
+
     # And the output array
     FINAL_COUNT = []
     for group in GROUP_LIST: FINAL_COUNT.append(0)
@@ -362,24 +362,24 @@ def final_party_count( FINAL_CANDIDATES, CAND_TO_GROUP, GROUP_TO_PARTY ):
     for candidate in FINAL_CANDIDATES:
         print candidate
         FINAL_COUNT[GROUP_LIST.index(CAND_TO_GROUP[candidate][0])] = FINAL_COUNT[GROUP_LIST.index(CAND_TO_GROUP[candidate][0])] + 1
-    
+
     return FINAL_COUNT
-    
+
 def final_party_count_to_list( PARTY_ELECTED, CAND_TO_GROUP, GROUP_TO_PARTY ):
     # Firstly; construct a list of all of the groups:
     GROUP_LIST = []
     for group in CAND_TO_GROUP:
         if not group[0] in GROUP_LIST: GROUP_LIST.append(group[0])
-    
+
     list1, list2 = (list(t) for t in zip(*sorted(zip(PARTY_ELECTED, GROUP_LIST))))
     list1.reverse()
     list2.reverse()
-    
+
     for index in range(len(list1)):
         party = list1[index]
         group = list2[index]
         if party > 0:
             GROUP_LIST.append([group,party])
-        
-        
+
+
     return GROUP_LIST

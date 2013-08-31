@@ -1,3 +1,6 @@
+import pandas as pd
+from pandas import DataFrame
+
 from sen_dis import sen_dis
 from votes_for_party import party_vote
 from votes_for_party import party_vote_adjusted
@@ -15,7 +18,7 @@ import math
 import copy
 import gc
 
-index = 0
+state_i = 0
 # State List
 ausst = []
 ausst.append(['New South Wales','Victoria','Queensland','Western Australia','South Australia','Tasmania','Australian Capital Territory','Northern Territory'])
@@ -24,67 +27,68 @@ ausst.append([6,6,6,6,6,6,2,2])
 ## Source files.
 # Preference flows for above the line votes sorted by party letter.
 # Each row is of the form:
-# Party Group , How Many Forms? , Preferences by ballot. 
-prefs = ausst[1][index] + '_Senate_Preferences.csv'
+# Party Group , How Many Forms? , Preferences by ballot.
+prefs = ausst[1][state_i] + '_Senate_Preferences.csv'
 # List of Candidates for the Senate sorted by ballot position
-cands = ausst[1][index] + '_Senate_Candidates.csv'
+cands = ausst[1][state_i] + '_Senate_Candidates.csv'
 # A list of the letter Groups along with the
-gpptv = ausst[1][index] + '_Groups_Parties_Votes.csv'
+gpptv = ausst[1][state_i] + '_Groups_Parties_Votes.csv'
 
 
 # Iterable type
-list = []
-list.append([1.89, 2.31])       #Liberal Democrats
-list.append([0.05])             #No Carbon Tax Climate Sceptics
-list.append([0.54, 0.66])       #Democratic Labour Party (DLP)
-list.append([0.05])             #Senator Online (Internet Voting Bills/Issues)
-list.append([0.05])             #Voluntary Euthanasia Party
-list.append([0.01])             #
-list.append([0.05])             #Help End Marijuana Prohibition (HEMP) Party
-list.append([0.28])             #Carers Alliance
-list.append([0.8, 1.8, 2.8])    #The Wikileaks Party
-list.append([0.68])             #Rise Up Australia Party
-list.append([0.03])             #Future Party
-list.append([2.25, 2.75])       #Christian Democratic Party (Fred Nile Group)
-list.append([27, 29, 31])       #Labor
-list.append([0.9, 1.9, 3.1])    #Katter's Australian Party
-list.append([0.05])             #Australian Voice
-list.append([1.8, 2.2])         #Sex Party
-list.append([1.197, 1.463])     #Australian Fishing and Lifestyle Party
-list.append([8, 9, 10])         #The Greens
-list.append([0.9, 1.9, 3.1])    #Palmer United Party
-list.append([0.23])             #Building Australia Party
-list.append([0.1])              #Uniting Australia Party
-list.append([0.5])              #Stop The Greens
-list.append([0.1])              #Smokers Rights
-list.append([0.08])             #Bullet Train For Australia
-list.append([39, 41, 43])       #Liberal
-list.append([0.05])             #Australian Protectionist Party
-list.append([0.65])             #Animal Justice Party
-list.append([0.3])              #Australia First Party
-list.append([0.06])             #Australian Independents
-list.append([0.07])             #Drug Law Reform
-list.append([0.05])             #Socialist Equality Party
-list.append([0.6])              #Australian Democrats
-list.append([0.02])             #
-list.append([1.26, 1.54])       #Family First Party
-list.append([0.1])              #Stable Population Party
-list.append([2.88, 3.52])       #Shooters and Fishers
-list.append([0.15])             #Stop CSG
-list.append([0.13])             #The Australian Republicans
-list.append([0.1])              #Socialist Alliance
-list.append([0.09])             #Non-Custodial Parents Party (Equal Parenting)
-list.append([0.5])              #Pirate Party
-list.append([0.1])              #Secular Party of Australia
-list.append([0.05])             #Australian Motoring Enthusiast Party
-list.append([1.6, 2.8, 4])      #One Nation
+primaries = []
+primaries.append([1.89, 2.31])       #Liberal Democrats
+primaries.append([0.05])             #No Carbon Tax Climate Sceptics
+primaries.append([0.54, 0.66])       #Democratic Labour Party (DLP)
+primaries.append([0.05])             #Senator Online (Internet Voting Bills/Issues)
+primaries.append([0.05])             #Voluntary Euthanasia Party
+primaries.append([0.01])             #
+primaries.append([0.05])             #Help End Marijuana Prohibition (HEMP) Party
+primaries.append([0.28])             #Carers Alliance
+primaries.append([0.8, 1.8, 2.8])    #The Wikileaks Party
+primaries.append([0.68])             #Rise Up Australia Party
+primaries.append([0.03])             #Future Party
+primaries.append([2.25, 2.75])       #Christian Democratic Party (Fred Nile Group)
+primaries.append([27, 29, 31])       #Labor
+primaries.append([0.9, 1.9, 3.1])    #Katter's Australian Party
+primaries.append([0.05])             #Australian Voice
+primaries.append([1.8, 2.2])         #Sex Party
+primaries.append([1.197, 1.463])     #Australian Fishing and Lifestyle Party
+primaries.append([8, 9, 10])         #The Greens
+primaries.append([0.9, 1.9, 3.1])    #Palmer United Party
+primaries.append([0.23])             #Building Australia Party
+primaries.append([0.1])              #Uniting Australia Party
+primaries.append([0.5])              #Stop The Greens
+primaries.append([0.1])              #Smokers Rights
+primaries.append([0.08])             #Bullet Train For Australia
+primaries.append([39, 41, 43])       #Liberal
+primaries.append([0.05])             #Australian Protectionist Party
+primaries.append([0.65])             #Animal Justice Party
+primaries.append([0.3])              #Australia First Party
+primaries.append([0.06])             #Australian Independents
+primaries.append([0.07])             #Drug Law Reform
+primaries.append([0.05])             #Socialist Equality Party
+primaries.append([0.6])              #Australian Democrats
+primaries.append([0.02])             #
+primaries.append([1.26, 1.54])       #Family First Party
+primaries.append([0.1])              #Stable Population Party
+primaries.append([2.88, 3.52])       #Shooters and Fishers
+primaries.append([0.15])             #Stop CSG
+primaries.append([0.13])             #The Australian Republicans
+primaries.append([0.1])              #Socialist Alliance
+primaries.append([0.09])             #Non-Custodial Parents Party (Equal Parenting)
+primaries.append([0.5])              #Pirate Party
+primaries.append([0.1])              #Secular Party of Australia
+primaries.append([0.05])             #Australian Motoring Enthusiast Party
+primaries.append([1.6, 2.8, 4])      #One Nation
 product = 1
-for elt in list: product = product * len(elt)
+for elt in primaries:
+    product = product * len(elt)
 print product
 # Regular type
-#list = []
-#list.append([2.31,0.21,0.75,0.07,0,0,0,0.28,0,0,0,1.94,34.54,0,0,1.77,0,9.69,0,0.26,0,0,0,0,40.95,0,0,0,0,0,0.09,0.68,0,0.94,0,2.33,0,0,0.56,0.09,0,0.1,0,2.3])
-#list.append([2.31,0.21,0.75,0.07,0,0,0,0.28,0,0,0,1.94,34.54,0,0,1.77,0,9.69,0,0.26,0,0,0,0,40.95,0,0,0,0,0,0.09,0.68,0,0.94,0,2.33,0,0,0.56,0.09,0,0.1,0,4.3])
+#primaries = []
+#primaries.append([2.31,0.21,0.75,0.07,0,0,0,0.28,0,0,0,1.94,34.54,0,0,1.77,0,9.69,0,0.26,0,0,0,0,40.95,0,0,0,0,0,0.09,0.68,0,0.94,0,2.33,0,0,0.56,0.09,0,0.1,0,2.3])
+#primaries.append([2.31,0.21,0.75,0.07,0,0,0,0.28,0,0,0,1.94,34.54,0,0,1.77,0,9.69,0,0.26,0,0,0,0,40.95,0,0,0,0,0,0.09,0.68,0,0.94,0,2.33,0,0,0.56,0.09,0,0.1,0,4.3])
 
 ## Other Variables
 no_of_electors = 100000; # For each state define number of electors
@@ -95,32 +99,32 @@ no_of_electors = 100000; # For each state define number of electors
 # Third is verbose (or not) (1 for verbose, anything for not)
 # Fourth is the state number. [From the list above]
 # Fifth is the flag for Senate Style overflow (0) vs. Proportional Rep Overflow (1) vs. others?
-parameters = [ausst[2][index],6,0,0,0]
+parameters = [ausst[2][state_i],6,0,0,0]
 
 # Run the election once, to set a baseline for our analysis.
 vote_dictionary, name_dictionary, group_list, t_votes = group_setup(gpptv)
 senate_array = []
 senate_count = []
-#for i in range(product):
-for i in range(1):
-    #vote_dictionary, name_dictionary, group_list, t_votes = group_setup_from_list(gpptv,group_batch_from_iterable(list,i))
-    vote_dictionary, name_dictionary, group_list, t_votes = group_setup(gpptv)
+#for i in range(1):
+#    vote_dictionary, name_dictionary, group_list, t_votes = group_setup(gpptv)
+for i in range(100):#range(product):
+    vote_dictionary, name_dictionary, group_list, t_votes = group_setup_from_list(gpptv,group_batch_from_iterable(primaries,i))
     vote_dictionary, name_dictionary, group_list, votes, vote_list_ticket_data, cand_to_group, final_state, output, quota, output_party, output_party2, fractional_loss, curr_elected, party_elected, party_elected_list = total_election(prefs,cands,gpptv,ausst,no_of_electors,parameters,vote_dictionary,name_dictionary,group_list,t_votes)
     #print quota
     if sum(party_elected) < 6:
         print 'ERROR AT: ' + str(i)
     if party_elected in senate_array:
-        index = senate_array.index(party_elected)
-        senate_count[index] = senate_count[index] + 1
+        state_i = senate_array.index(party_elected)
+        senate_count[state_i] = senate_count[state_i] + 1
     else:
         senate_array.append(copy.deepcopy(party_elected))
         senate_count.append(1)
     if int(math.floor(i/100))*100 == int(i):
         print i
-        
+
 print senate_array
 print senate_count
-with open(ausst[1][index] + "_output.csv", "w") as text_file:
+with open(ausst[1][state_i] + "_output.csv", "w") as text_file:
     for i in range(len(senate_count)):
         to_print = str(senate_count[i])
         for element in senate_array[i]: to_print = to_print + ',' + str(element)
@@ -161,15 +165,15 @@ text_construction.append(['heading2','Detailed Count and Distribution'])
 # Back to work.
 
 # Now we run the text analysis of the
-round = 0
+allocation_round = 0
 for line in output:
     # Begin the printing / output of the relevant data
     #print line
-    round = round + 1
+    allocation_round += 1
     if 'init' in line[0]:
-        text_construction.append(['heading3', 'Round ' + str(round) + '. The initial allocation of votes is as follows:'])
+        text_construction.append(['heading3', 'Round ' + str(allocation_round) + '. The initial allocation of votes is as follows:'])
         # Create the matrix of results.
-        
+
     elif 'over' in line[0]:
         rand = 0
     elif 'last' in line[0]:
@@ -177,30 +181,30 @@ for line in output:
             rand = 0
     elif 'drop' in line[0]:
         rand = 0
-        
+
     elif 'zero' in line[0]:
-        round = round - 1
-        
+        allocation_round -= 1
+
 
 
 #print text_construction
 
 # Variables needed for the output:
-round = 0
+allocation_round = 0
 for line in output:
     # Begin the printing / output of the relevant data
     #print line
-    round = round + 1
+    allocation_round = allocation_round + 1
     if 'init' in line[0]:
-        print 'Round: ' + str(round) + ' | Initial vote allocation'
+        print 'Round: ' + str(allocation_round) + ' | Initial vote allocation'
     elif 'over' in line[0]:
-        print 'Round: ' + str(round) + ' | Elected No. ' + str(line[1]) + ' | Group ' + str(cand_to_group[line[2][0]][0]) + ' | ' + str(name_dictionary[str(cand_to_group[line[2][0]][0])]) + ' | ' + str(cand_to_group[line[2][0]][1])
+        print 'Round: ' + str(allocation_round) + ' | Elected No. ' + str(line[1]) + ' | Group ' + str(cand_to_group[line[2][0]][0]) + ' | ' + str(name_dictionary[str(cand_to_group[line[2][0]][0])]) + ' | ' + str(cand_to_group[line[2][0]][1])
     elif 'last' in line[0]:
         for index in range(len(line[1])):
-            print 'Round: ' + str(round) + ' | Elected No. ' + str(line[1][index]) + ' | Group ' + str(cand_to_group[line[2][index]][0]) + ' | ' + str(name_dictionary[str(cand_to_group[line[2][index]][0])]) + ' | ' + str(cand_to_group[line[2][index]][1])
+            print 'Round: ' + str(allocation_round) + ' | Elected No. ' + str(line[1][index]) + ' | Group ' + str(cand_to_group[line[2][index]][0]) + ' | ' + str(name_dictionary[str(cand_to_group[line[2][index]][0])]) + ' | ' + str(cand_to_group[line[2][index]][1])
     elif 'drop' in line[0]:
-        print 'Round: ' + str(round) + ' | Excluded in place: ' + str(line[1]) + ' | Group ' + str(cand_to_group[line[2][0]][0]) + ' | ' + str(name_dictionary[str(cand_to_group[line[2][0]][0])]) + ' | ' + str(cand_to_group[line[2][0]][1])
+        print 'Round: ' + str(allocation_round) + ' | Excluded in place: ' + str(line[1]) + ' | Group ' + str(cand_to_group[line[2][0]][0]) + ' | ' + str(name_dictionary[str(cand_to_group[line[2][0]][0])]) + ' | ' + str(cand_to_group[line[2][0]][1])
         # There may be more than one candidate elected in this last overflow. So be sure to get it right.
     elif 'zero' in line[0]:
-        round = round - 1
+        allocation_round = allocation_round - 1
         print str(len(line[1])) + ' candidates eliminated with zero votes.'
