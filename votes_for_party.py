@@ -85,50 +85,46 @@ def group_setup_from_list ( gpptv_data , primaries ):
 
     return vote_dictionary, name_dictionary, group_list, t_votes
 
-def total_election ( prefs, cands, ausst, no_of_electors, parameters, vote_dictionary, name_dictionary, group_list, t_votes):
+def total_election ( prefs_data, cands_data, ausst, no_of_electors, parameters, vote_dictionary, name_dictionary, group_list, t_votes):
 
     # Create the vote list to pass into the algorithm; appending all of
     # the preference data.
     votes = []
     vote_list_ticket_data = []
-    with open(prefs,'rb') as csvfile:
-        spamreader = csv.reader(csvfile,delimiter=',')
-        temp1 = 0
-        ticket_of_total = 1
-        last_group = '0'
-        for row in spamreader:
-            no_of_votes = int(math.floor(float(float(float(vote_dictionary[row[0].strip()]) / float(row[1])) * float(no_of_electors) / float(t_votes))))
-            votes.append([[],no_of_votes])
-            temp2 = 2
-            while temp2 < len(row):
-                votes[temp1][0].append(int(row[temp2]))
-                temp2 = temp2 + 1
-            temp1 = temp1 + 1
-            # Check if the last group was the same
-            if row[0].strip() in last_group:
-                ticket_of_total = ticket_of_total + 1
-            else:
-                ticket_of_total = 1
-            last_group = row[0].strip()
-            vote_list_ticket_data.append([last_group,ticket_of_total,int(row[1])])
+    temp1 = 0
+    ticket_of_total = 1
+    last_group = '0'
+    for row in prefs_data.values:
+        no_of_votes = int(math.floor(float(float(float(vote_dictionary[row[0].strip()]) / float(row[1])) * float(no_of_electors) / float(t_votes))))
+        votes.append([[],no_of_votes])
+        temp2 = 2
+        while temp2 < len(row):
+            votes[temp1][0].append(int(row[temp2]))
+            temp2 = temp2 + 1
+        temp1 = temp1 + 1
+        # Check if the last group was the same
+        if row[0] in last_group:
+            ticket_of_total = ticket_of_total + 1
+        else:
+            ticket_of_total = 1
+        last_group = row[0]
+        vote_list_ticket_data.append([last_group,ticket_of_total,int(row[1])])
 
     # Create a dictionary of the candidates by their group letter.
     cand_to_group = []
     current_group = '0'
-    with open(cands,'rb') as csvfile:
-        spamreader = csv.reader(csvfile,delimiter=',')
-        first_row = 0
-        index = -1
-        for row in spamreader:
-            if first_row == 1:
-                if '1' in row[3]:
-                    index = index + 1
-                    if index >= len(group_list):
-                        current_group = 'Ungrouped'
-                    else:
-                        current_group = group_list[index]
-                cand_to_group.append([copy.deepcopy(current_group),str(row[5]) + ' ' + str(row[4])])
-            first_row = 1
+    first_row = 0
+    index = -1
+    for row in cands_data.values:
+        if first_row == 1:
+            if '1' in row[3]:
+                index = index + 1
+                if index >= len(group_list):
+                    current_group = 'Ungrouped'
+                else:
+                    current_group = group_list[index]
+            cand_to_group.append([copy.deepcopy(current_group),str(row[5]) + ' ' + str(row[4])])
+        first_row = 1
 
     # Run the election
     final_state = sen_dis(votes,parameters)
@@ -353,10 +349,10 @@ def final_party_count( FINAL_CANDIDATES, CAND_TO_GROUP, GROUP_TO_PARTY ):
     # And the output array
     FINAL_COUNT = []
     for group in GROUP_LIST: FINAL_COUNT.append(0)
-    print FINAL_CANDIDATES
-    print CAND_TO_GROUP
+    # print FINAL_CANDIDATES
+    # print CAND_TO_GROUP
     for candidate in FINAL_CANDIDATES:
-        print candidate
+        # print candidate
         FINAL_COUNT[GROUP_LIST.index(CAND_TO_GROUP[candidate][0])] = FINAL_COUNT[GROUP_LIST.index(CAND_TO_GROUP[candidate][0])] + 1
 
     return FINAL_COUNT

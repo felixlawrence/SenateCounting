@@ -28,9 +28,9 @@ ausst.append([6,6,6,6,6,6,2,2])
 # Preference flows for above the line votes sorted by party letter.
 # Each row is of the form:
 # Party Group , How Many Forms? , Preferences by ballot.
-prefs = ausst[1][state_i] + '_Senate_Preferences.csv'
+prefs_data = pd.read_csv(ausst[1][state_i] + '_Senate_Preferences.csv', header = None)
 # List of Candidates for the Senate sorted by ballot position
-cands = ausst[1][state_i] + '_Senate_Candidates.csv'
+cands_data = pd.read_csv(ausst[1][state_i] + '_Senate_Candidates.csv', header = None)
 # A list of the letter Groups along with the
 gpptv_data = pd.read_csv(ausst[1][state_i] + '_Groups_Parties_Votes.csv', header=None)
 
@@ -113,7 +113,7 @@ for i in range(100):#range(product):
     (votes, vote_list_ticket_data,
         cand_to_group, final_state, output, quota, output_party, output_party2,
         fractional_loss, curr_elected, party_elected, party_elected_list
-        ) = total_election(prefs,cands,ausst,no_of_electors,parameters,vote_dictionary,name_dictionary,group_list,t_votes)
+        ) = total_election(prefs_data,cands_data,ausst,no_of_electors,parameters,vote_dictionary,name_dictionary,group_list,t_votes)
     #print quota
     if sum(party_elected) < 6:
         print 'ERROR AT: ' + str(i)
